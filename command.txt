@@ -1,0 +1,11 @@
+curl ifconfig.me
+
+lsb_release -a
+
+sudo apt update && sudo apt install -y python3 python3-pip
+
+pip install python-telegram-bot --upgrade
+
+chmod +x *
+
+python3 bgmi.py

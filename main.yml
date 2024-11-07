@@ -1,0 +1,37 @@
+name: Run bgmi Bot  # The name of the GitHub Action workflow
+
+# Trigger the workflow on 'push' to 'main' branch and on a scheduled cron job every 5 minutes
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow when changes are pushed to the 'main' branch
+  schedule:
+    - cron: '*/5 * * * *'  # Scheduled to run every 5 minutes (cron syntax)
+
+jobs:
+  run_bot:  # The job name
+    runs-on: ubuntu-latest  # Specify the operating system to run on (Ubuntu in this case)
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Check out the code
+        uses: actions/checkout@v2  # Checkout the code in the repository to the GitHub runner
+
+      # Step 2: Make the 'bgmi' binary executable
+      - name: make executable binary
+        run: chmod +x bgmi  # Give execute permissions to the 'bgmi' file (which is assumed to be a binary)
+
+      # Step 3: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v3  # Use the 'setup-python' action to set up Python
+        with:
+          python-version: '3.x'  # Specify the Python version to use (Python 3.x)
+
+      # Step 4: Install the required Python packages
+      - name: Install required packages
+        run: |
+          pip install python-telegram-bot --upgrade  # Upgrade and install the 'python-telegram-bot' package
+
+      # Step 5: Run the 'bgmi.py' Python script
+      - name: Run bgmi.py
+        run: python3 bgmi.py  # Execute the 'bgmi.py' Python script using Python 3
